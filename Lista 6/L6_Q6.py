@@ -15,12 +15,14 @@ x = data.iloc[:,:N]		# Drop labels
 
 print(x.shape)
 
+x = x - np.mean(x, 0)	# Normalize data
+
 mse = np.zeros(N)
 for component in range(1, N, 1):
 	pca = PCA(component)
 	x_red = pca.fit_transform(x)
 	x_inv = pca.inverse_transform(x_red)
-	
+
 	diff = x - x_inv
 
 	mse[component-1] = np.sum(np.sum(np.power(diff, 2)))
